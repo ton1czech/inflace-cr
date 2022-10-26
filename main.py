@@ -17,17 +17,21 @@ options = st.sidebar.radio('Vyber vizualizaci:', [
 # load data
 df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
 
+# table where you can filter data by year and month
 def table_filtered():
     st.subheader('Tabulka inflace')
 
+    # append new row to use all data in column
     new_df = pd.DataFrame([['vše', 'vše', '']], columns=df.columns).append(df)
 
+    # split layout to two columns
     col1, col2 = st.columns(2)
     with col1:
         year = st.selectbox('Filtrovat rok:', new_df['rok'].unique())
     with col2:
         month = st.selectbox('Filtrovat měsíc:',  new_df['měsíc'].unique())
     
+    # filter engine
     if year == 'vše' and month == 'vše':
         st.dataframe(df)
     else:
@@ -41,11 +45,13 @@ def table_filtered():
             new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month)]
             st.dataframe(new_df)
 
+# simple table of inflation data
 def table():
     st.subheader('Tabulka inflace')
 
     st.dataframe(df)
 
+# show inflation % of each month since 2000 till now
 def inflation_alltime():
     st.subheader('Vývoj inflace of roku 2000')
 
@@ -68,6 +74,7 @@ def inflation_alltime():
 
     st.plotly_chart(fig, config=config)
 
+# show inflation in selected year
 def inflation_by_year():
     st.subheader('Vývoj inflace (roční)')
 
@@ -77,6 +84,7 @@ def inflation_by_year():
 
     st.line_chart(new_df, x='měsíc', y='procenta')
 
+# sidebar menu functionality
 if options == 'Hlavní stránka':
     st.title('Inflace v ČR')
 
