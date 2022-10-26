@@ -76,13 +76,28 @@ def inflation_alltime():
 
 # show inflation in selected year
 def inflation_by_year():
-    st.subheader('Vývoj inflace (roční)')
+    st.subheader('Vývoj inflace pro zvolený rok')
 
     year = st.selectbox('Vyber rok:', df['rok'].unique())
 
     new_df = df.loc[df['rok'] == year]
 
-    st.line_chart(new_df, x='měsíc', y='procenta')
+    fig = px.line(new_df, x='měsíc', y='procenta', labels=dict(měsíc='Měsíce', procenta='%'), markers=True)
+
+    config = dict({'scrollZoom': True})
+    fig.update_layout(
+        dragmode='pan',
+        plot_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            showgrid=False,
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+        ),
+    )
+
+    st.plotly_chart(fig, config=config)
 
 # sidebar menu functionality
 if options == 'Hlavní stránka':
