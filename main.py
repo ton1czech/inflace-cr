@@ -1,18 +1,17 @@
-from re import MULTILINE
 import streamlit as st
 import pandas as pd
+import plotly_express as px
 
 # page settings
 st.set_page_config(page_title="Inflace v ČR", page_icon=":chart_with_upwards_trend:")
-st.title("Inflace v ČR")
 
 # sidebar
 st.sidebar.title("Navigace")
 options = st.sidebar.radio("Vyber vizualizaci:", [
     'Hlavní stránka', 
     'Tabulka dat', 
+    'Vývoj inflace od roku 2000',
     'Roční vývoj inflace', 
-    'Měsíční vývoj inflace',
     ])
 
 # load data
@@ -22,31 +21,68 @@ def table():
     st.subheader("Tabulka inflace")
     st.dataframe(df)
 
-def inflation_by_month():
+def inflation_alltime():
+    st.subheader("Vývoj inflace of roku 2000")
+
     df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
 
-    st.subheader("Vývoj inflace (měsíční)")
-    st.line_chart(df, x='datum', y='procenta')
+    fig = px.line(df, x='datum', y='procenta', labels=dict(datum="Rok a měsíc", procenta='%'))
+
+    config = dict({'scrollZoom': True})
+    fig.update_layout(
+        dragmode='pan',
+        xaxis=dict(
+            showgrid=False,
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+        ),
+    )
+
+    st.plotly_chart(fig, config=config)
 
 def inflation_by_year():
+    st.subheader("Vývoj inflace (roční)")
+
     year = st.selectbox("Vyber rok:", df['rok'].unique())
 
     new_df = df.loc[df['rok'] == year]
 
-    st.subheader("Vývoj inflace (roční)")
     st.line_chart(new_df, x='měsíc', y='procenta')
 
+def plotly_test():
+    # df = px.data.gapminder().query("country=='Czech Republic'")
+    # fig = px.line(df, x='year', y='lifeExp', title='Life expectancy in Czechia')
+    df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
+    config = dict({'scrollZoom': True})
+    fig = px.line(df, x='datum', y='procenta', labels=dict(datum="Rok a měsíc", procenta='%'))
+    fig.update_layout(
+        dragmode='pan',
+        xaxis=dict(
+            showgrid=False,
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+        ),
+    )
+
+    st.plotly_chart(fig, config=config)
+
 if options == 'Hlavní stránka':
+    st.title("Inflace v ČR")
+
     col1, col2 = st.columns(2)
     with col1:
         table()
     with col2:
         st.markdown("Data jsou z českého statistického úřadu _(www.czso.cz/csu/czso/mira_inflace)_. Zde najdete mnou vytvořené **.csv** datasety: _www.github.com/ton1czech/inflace-cr-dataset_")
-    inflation_by_month()
+    inflation_alltime()
     inflation_by_year()
 elif options == 'Tabulka dat':
     table()
 elif options == 'Roční vývoj inflace':
     inflation_by_year()
-elif options == 'Měsíční vývoj inflace':
-    inflation_by_month()
+elif options == 'Vývoj inflace od roku 2000':
+    inflation_alltime()
