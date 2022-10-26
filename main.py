@@ -1,3 +1,4 @@
+from re import MULTILINE
 import streamlit as st
 import pandas as pd
 
@@ -7,7 +8,12 @@ st.title("Inflace v ČR")
 
 # sidebar
 st.sidebar.title("Navigace")
-options = st.sidebar.radio("Vyber vizualizaci:", ['Tabulka dat', 'Roční vývoj inflace', 'Měsíční vývoj inflace'])
+options = st.sidebar.radio("Vyber vizualizaci:", [
+    'Hlavní stránka', 
+    'Tabulka dat', 
+    'Roční vývoj inflace', 
+    'Měsíční vývoj inflace'
+    ])
 
 # load data
 data_monthly = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
@@ -26,6 +32,17 @@ def inflation_by_year():
     st.subheader("Vývoj inflace (roční)")
     st.line_chart(data_yearly, x='rok', y='procenta')
 
-table()
-inflation_by_month()
-inflation_by_year()
+if options == 'Hlavní stránka':
+    col1, col2 = st.columns(2)
+    with col1:
+        table()
+    with col2:
+        st.markdown("Data jsou z českého statistického úřadu _(www.czso.cz/csu/czso/mira_inflace)_. Zde najdete mnou vytvořené **.csv** datasety: _www.github.com/ton1czech/inflace-cr-dataset_")
+    inflation_by_month()
+    inflation_by_year()
+elif options == 'Tabulka dat':
+    table()
+elif options == 'Roční vývoj inflace':
+    inflation_by_year()
+elif options == 'Měsíční vývoj inflace':
+    inflation_by_month()
