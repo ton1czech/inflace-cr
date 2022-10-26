@@ -17,8 +17,33 @@ options = st.sidebar.radio("Vyber vizualizaci:", [
 # load data
 df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
 
+def table_filtered():
+    st.subheader("Tabulka inflace")
+
+    new_df = pd.DataFrame([['vše', 'vše', '']], columns=df.columns).append(df)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        year = st.selectbox("Filtrovat rok:", new_df['rok'].unique())
+    with col2:
+        month = st.selectbox("Filtrovat měsíc:",  new_df['měsíc'].unique())
+    
+    if year == 'vše' and month == 'vše':
+        st.dataframe(df)
+    else:
+        if year == 'vše' and month:
+            new_df = df.loc[(df['měsíc'] == month)]
+            st.dataframe(new_df)
+        elif year and month == 'vše':
+            new_df = df.loc[(df['rok'] == year)]
+            st.dataframe(new_df)
+        else:
+            new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month)]
+            st.dataframe(new_df)
+
 def table():
     st.subheader("Tabulka inflace")
+
     st.dataframe(df)
 
 def inflation_alltime():
@@ -62,7 +87,7 @@ if options == 'Hlavní stránka':
     inflation_alltime()
     inflation_by_year()
 elif options == 'Tabulka dat':
-    table()
+    table_filtered()
 elif options == 'Roční vývoj inflace':
     inflation_by_year()
 elif options == 'Vývoj inflace od roku 2000':
