@@ -12,25 +12,29 @@ options = st.sidebar.radio("Vyber vizualizaci:", [
     'Hlavní stránka', 
     'Tabulka dat', 
     'Roční vývoj inflace', 
-    'Měsíční vývoj inflace'
+    'Měsíční vývoj inflace',
     ])
 
 # load data
-data_monthly = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
-data_yearly = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/rocni-inflace.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
 
 def table():
     st.subheader("Tabulka inflace")
-    st.dataframe(data_monthly)
+    st.dataframe(df)
 
 def inflation_by_month():
-    data_monthly['datum'] = data_monthly['rok'].astype(str) + '.' + data_monthly['měsíc']
+    df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
+
     st.subheader("Vývoj inflace (měsíční)")
-    st.line_chart(data_monthly, x='datum', y='procenta')
+    st.line_chart(df, x='datum', y='procenta')
 
 def inflation_by_year():
+    year = st.selectbox("Vyber rok:", df['rok'].unique())
+
+    new_df = df.loc[df['rok'] == year]
+
     st.subheader("Vývoj inflace (roční)")
-    st.line_chart(data_yearly, x='rok', y='procenta')
+    st.line_chart(new_df, x='měsíc', y='procenta')
 
 if options == 'Hlavní stránka':
     col1, col2 = st.columns(2)
