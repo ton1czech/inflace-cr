@@ -116,3 +116,13 @@ elif options == 'Roční vývoj inflace':
     inflation_by_year()
 elif options == 'Vývoj inflace od roku 2000':
     inflation_alltime()
+
+# custom styles
+styles = """
+            <style>
+                .css-1dp5vir.e8zbici1 {
+                    background: linear-gradient(to right, #667eea, #764ba2);
+                }
+            </style>
+            """
+st.markdown(styles, unsafe_allow_html=True)
