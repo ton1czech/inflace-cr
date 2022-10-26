@@ -51,25 +51,6 @@ def inflation_by_year():
 
     st.line_chart(new_df, x='měsíc', y='procenta')
 
-def plotly_test():
-    # df = px.data.gapminder().query("country=='Czech Republic'")
-    # fig = px.line(df, x='year', y='lifeExp', title='Life expectancy in Czechia')
-    df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
-    config = dict({'scrollZoom': True})
-    fig = px.line(df, x='datum', y='procenta', labels=dict(datum="Rok a měsíc", procenta='%'))
-    fig.update_layout(
-        dragmode='pan',
-        xaxis=dict(
-            showgrid=False,
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-        ),
-    )
-
-    st.plotly_chart(fig, config=config)
-
 if options == 'Hlavní stránka':
     st.title("Inflace v ČR")
 
