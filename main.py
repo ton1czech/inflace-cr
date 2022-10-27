@@ -137,12 +137,12 @@ def inflation_by_year():
 def inflation_median_salary():
     st.subheader('Spojitost mezi inflací a minimální mzdou')
 
-    fig = px.bar(rocni_df, x='rok', y='procenta', labels={'rok': 'Měsíce', 'procenta': '%'})
+    fig = px.bar(rocni_df, x='rok', y='procenta')
 
     trace1 = go.Bar(
         x=rocni_df['rok'],
         y=rocni_df['procenta'],
-        name='míra inflace (%)'
+        name='míra inflace (%)',
     )
 
     trace2 = go.Line(
@@ -152,7 +152,6 @@ def inflation_median_salary():
         yaxis='y2'
     )
 
-
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(trace1)
     fig.add_trace(trace2, secondary_y=True)
@@ -161,14 +160,15 @@ def inflation_median_salary():
     fig.update_layout(
         dragmode='pan',
         plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(
-            showgrid=False,
-        ),
         yaxis=dict(
-            showgrid=False,
             zeroline=False,
         ),
     )
+    fig.for_each_xaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False))
+    fig['layout']['xaxis']['title']='Rok'
+    fig['layout']['yaxis']['title']='%'
+    fig['layout']['yaxis2']['title']='Kč'
 
     st.plotly_chart(fig, config=config, use_container_width=True)
 
