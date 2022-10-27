@@ -91,7 +91,7 @@ def inflation_alltime():
 def inflation_by_year():
     st.subheader('Vývoj inflace pro zvolený rok')
 
-    year = st.selectbox('Vyber rok:', df['rok'].unique())
+    year = st.select_slider('Vyber rok:', df['rok'].unique(), df['rok'].max(axis=0))
 
     new_df = df.loc[df['rok'] == year]
 
