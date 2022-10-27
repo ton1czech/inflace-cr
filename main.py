@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 # page settings
-st.set_page_config(page_title='Inflace v ČR', page_icon=':chart_with_upwards_trend:')
+st.set_page_config(page_title='Inflace v ČR', page_icon=':chart_with_upwards_trend:', layout='wide')
 
 # sidebar navigation
 with st.sidebar:
@@ -106,7 +106,7 @@ def inflation_alltime():
         ),
     )
 
-    st.plotly_chart(fig, config=config)
+    st.plotly_chart(fig, config=config, use_container_width=True)
 
 # show inflation in selected year
 def inflation_by_year():
@@ -131,7 +131,7 @@ def inflation_by_year():
         ),
     )
 
-    st.plotly_chart(fig, config=config)
+    st.plotly_chart(fig, config=config, use_container_width=True)
 
 # continuity between inflation and median salary
 def inflation_median_salary():
@@ -170,7 +170,7 @@ def inflation_median_salary():
         ),
     )
 
-    st.plotly_chart(fig, config=config)
+    st.plotly_chart(fig, config=config, use_container_width=True)
 
 # sidebar menu functionality
 if options == 'Hlavní stránka':
