@@ -38,6 +38,30 @@ df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset
 rocni_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/rocni-inflace.csv')
 prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/prumerna-mzda-cr-dataset/master/prumerna-mzda.csv')
 
+# home page
+def home():
+    st.title('Inflace v ČR')
+
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.markdown('''
+            #### Projekt jsem vytvořil za účelem zjištění informací o inflaci v České republice, jelikož v poslední době stoupá velice rychlým tempem.  
+            #### Dále jsem se chtěl naučit používat technologie sloužící právě k datové vizualizaci.  
+            #### Pro zobrazení dalších vizualizací zvolte jednu z možností v postranní nabídce.
+        ''', unsafe_allow_html=True)
+
+    with col2:
+        st.markdown('''
+            Všechna data jsou získána z ČSÚ  
+            _(www.czso.cz/csu/czso/mira_inflace)_.  
+            <br>
+            Zde najdete mnou vytvořené **.csv** datasety:  
+            _www.github.com/ton1czech/inflace-cr-dataset_  
+            _www.github.com/ton1czech/prumerna-mzda-cr-dataset_
+        ''', unsafe_allow_html=True)
+    
+    inflation_alltime()
+    
 # table where you can filter data by year and month
 def table_filtered():
     st.subheader('Tabulka inflace')
@@ -87,11 +111,9 @@ def table():
 
 # show inflation % of each month since 2000 till now
 def inflation_alltime():
-    st.subheader('Vývoj inflace of roku 2000')
-
     df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
 
-    fig = px.line(df, x='datum', y='procenta', labels=dict(datum='Rok a měsíc', procenta='%'))
+    fig = px.line(df, x='datum', y='procenta', title='Vývoj inflace od roku 2000', labels=dict(datum='Rok a měsíc', procenta='%'))
 
     config = dict({'scrollZoom': True})
     fig.update_layout(
@@ -174,15 +196,7 @@ def inflation_median_salary():
 
 # sidebar menu functionality
 if options == 'Hlavní stránka':
-    st.title('Inflace v ČR')
-
-    col1, col2 = st.columns(2)
-    with col1:
-        table()
-    with col2:
-        st.markdown('Data jsou z českého statistického úřadu _(www.czso.cz/csu/czso/mira_inflace)_. Zde najdete mnou vytvořené **.csv** datasety: _www.github.com/ton1czech/inflace-cr-dataset_')
-    inflation_alltime()
-    inflation_by_year()
+    home()
 elif options == 'Tabulka dat':
     table_filtered()
 elif options == 'Roční vývoj inflace':
