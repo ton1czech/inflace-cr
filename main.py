@@ -31,19 +31,20 @@ def table_filtered():
     with col2:
         month = st.selectbox('Filtrovat měsíc:',  new_df['měsíc'].unique())
     
+    low_percentage, high_percentage = st.select_slider('Filtrovat procenta:', df['procenta'].sort_values().unique(), (df['procenta'].min(axis=0), df['procenta'].max(axis=0)))
+    
     # filter engine
-    if year == 'vše' and month == 'vše':
+    if year == 'vše' and month == 'vše' and low_percentage == df['procenta'].min(axis=0) and high_percentage == df['procenta'].max(axis=0):
         st.dataframe(df)
-    else:
-        if year == 'vše' and month:
-            new_df = df.loc[(df['měsíc'] == month)]
-            st.dataframe(new_df)
-        elif year and month == 'vše':
-            new_df = df.loc[(df['rok'] == year)]
-            st.dataframe(new_df)
-        else:
-            new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month)]
-            st.dataframe(new_df)
+    elif year != 'vše' and month != 'vše':
+        new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month)]
+        st.dataframe(new_df)
+    elif year != 'vše':
+        new_df = df.loc[(df['rok'] == year)]
+        st.dataframe(new_df)
+    elif month != 'vše':
+        new_df = df.loc[(df['měsíc'] == month)]
+        st.dataframe(new_df)
 
 # simple table of inflation data
 def table():
