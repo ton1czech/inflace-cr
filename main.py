@@ -1,18 +1,33 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 import pandas as pd
 import plotly_express as px
 
 # page settings
 st.set_page_config(page_title='Inflace v ČR', page_icon=':chart_with_upwards_trend:')
 
-# sidebar
-st.sidebar.title('Navigace')
-options = st.sidebar.radio('Vyber vizualizaci:', [
-    'Hlavní stránka', 
-    'Tabulka dat', 
-    'Vývoj inflace od roku 2000',
-    'Roční vývoj inflace', 
-    ])
+# sidebar navigation
+with st.sidebar:
+    options = option_menu(
+        menu_title=None,
+        options=[
+            'Hlavní stránka', 
+            'Tabulka dat', 
+            'Vývoj inflace od roku 2000',
+            'Roční vývoj inflace', 
+        ],
+        icons=[
+            'house',
+            'file-spreadsheet',
+            'graph-up',
+            'graph-up'
+        ],
+        styles={
+            "nav-link": {
+                "font-size": "13px"
+            }
+        }
+    )
 
 # load data
 df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
