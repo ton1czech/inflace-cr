@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 import plotly_express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 # page settings
 st.set_page_config(page_title='Inflace v ČR', page_icon=':chart_with_upwards_trend:')
@@ -15,12 +17,14 @@ with st.sidebar:
             'Tabulka dat', 
             'Vývoj inflace od roku 2000',
             'Roční vývoj inflace', 
+            'Inflace/Průměrná mzda'
         ],
         icons=[
             'house',
             'file-spreadsheet',
             'graph-up',
-            'graph-up'
+            'graph-up',
+            'arrow-down-up'
         ],
         styles={
             "nav-link": {
@@ -31,6 +35,8 @@ with st.sidebar:
 
 # load data
 df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
+rocni_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/rocni-inflace.csv')
+prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/prumerna-mzda-cr-dataset/master/prumerna-mzda.csv')
 
 # table where you can filter data by year and month
 def table_filtered():
@@ -127,6 +133,45 @@ def inflation_by_year():
 
     st.plotly_chart(fig, config=config)
 
+# continuity between inflation and median salary
+def inflation_median_salary():
+    st.subheader('Spojitost mezi inflací a minimální mzdou')
+
+    fig = px.bar(rocni_df, x='rok', y='procenta', labels={'rok': 'Měsíce', 'procenta': '%'})
+
+    trace1 = go.Bar(
+        x=rocni_df['rok'],
+        y=rocni_df['procenta'],
+        name='míra inflace (%)'
+    )
+
+    trace2 = go.Line(
+        x=prumerna_mzda_df['rok'],
+        y=prumerna_mzda_df['částka'],
+        name='průměrná mzda (Kč)',
+        yaxis='y2'
+    )
+
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(trace1)
+    fig.add_trace(trace2, secondary_y=True)
+
+    config = dict({'scrollZoom': True})
+    fig.update_layout(
+        dragmode='pan',
+        plot_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            showgrid=False,
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+        ),
+    )
+
+    st.plotly_chart(fig, config=config)
+
 # sidebar menu functionality
 if options == 'Hlavní stránka':
     st.title('Inflace v ČR')
@@ -144,6 +189,8 @@ elif options == 'Roční vývoj inflace':
     inflation_by_year()
 elif options == 'Vývoj inflace od roku 2000':
     inflation_alltime()
+elif options == 'Inflace/Průměrná mzda':
+    inflation_median_salary()
 
 # custom styles
 styles = """
