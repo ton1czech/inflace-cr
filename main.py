@@ -36,6 +36,15 @@ def table_filtered():
     # filter engine
     if year == 'vše' and month == 'vše' and min_percentage == df['procenta'].min(axis=0) and max_percentage == df['procenta'].max(axis=0):
         st.dataframe(df)
+    elif year != 'vše' and month != 'vše' and (min_percentage != df['procenta'].min(axis=0) or max_percentage != df['procenta'].max(axis=0)):
+        new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month) & (df['procenta'] <= max_percentage) & (df['procenta'] >= min_percentage)]
+        st.dataframe(new_df)
+    elif year != 'vše' and (min_percentage != df['procenta'].min(axis=0) or max_percentage != df['procenta'].max(axis=0)):
+        new_df = df.loc[(df['rok'] == year) & (df['procenta'] <= max_percentage) & (df['procenta'] >= min_percentage)]
+        st.dataframe(new_df)
+    elif month != 'vše' and (min_percentage != df['procenta'].min(axis=0) or max_percentage != df['procenta'].max(axis=0)):
+        new_df = df.loc[(df['měsíc'] == month) & (df['procenta'] <= max_percentage) & (df['procenta'] >= min_percentage)]
+        st.dataframe(new_df)
     elif year != 'vše' and month != 'vše':
         new_df = df.loc[(df['rok'] == year) & (df['měsíc'] == month)]
         st.dataframe(new_df)
