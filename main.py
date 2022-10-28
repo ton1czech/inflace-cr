@@ -205,11 +205,5 @@ match options:
         inflation_median_salary()
 
 # custom styles
-styles = """
-            <style>
-                .css-1dp5vir.e8zbici1 {
-                    background: linear-gradient(to right, #667eea, #764ba2);
-                }
-            </style>
-            """
-st.markdown(styles, unsafe_allow_html=True)
+with open('./styles/style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
