@@ -109,9 +109,10 @@ def table():
 
 # show inflation % of each month since 2000 till now
 def inflation_alltime(show_header=True):
-    df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
+    new_df = df.copy()
+    new_df['datum'] = new_df['rok'].astype(str) + '.' + new_df['měsíc']
 
-    fig = px.line(df, x='datum', y='procenta', title='Vývoj inflace od roku 2000' if show_header else None, labels=dict(datum='Rok a měsíc', procenta='%'))
+    fig = px.line(new_df, x='datum', y='procenta', title='Vývoj inflace od roku 2000' if show_header else None, labels=dict(datum='Rok a měsíc', procenta='%'))
 
     config = dict({'scrollZoom': True})
     fig.update_layout(
