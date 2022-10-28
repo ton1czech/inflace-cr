@@ -8,6 +8,22 @@ from plotly.subplots import make_subplots
 # page settings
 st.set_page_config(page_title='Inflace v ČR', page_icon=':chart_with_upwards_trend:', layout='wide')
 
+# plotly config
+px_cfg = {'scrollZoom': True}
+
+# plotly options for charts
+px_optios = {
+    'dragmode': 'pan',
+    'plot_bgcolor': 'rgba(0,0,0,0)',
+    'xaxis': {
+        'showgrid': False
+    },
+    'yaxis': {
+        'showgrid': False,
+        'zeroline': False
+    }
+}
+
 # sidebar navigation
 with st.sidebar:
     options = option_menu(
@@ -112,22 +128,22 @@ def inflation_alltime(show_header=True):
     new_df = df.copy()
     new_df['datum'] = new_df['rok'].astype(str) + '.' + new_df['měsíc']
 
-    fig = px.line(new_df, x='datum', y='procenta', title='Vývoj inflace od roku 2000' if show_header else None, labels=dict(datum='Rok a měsíc', procenta='%'))
-
-    config = dict({'scrollZoom': True})
-    fig.update_layout(
-        dragmode='pan',
-        plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(
-            showgrid=False,
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-        ),
+    fig = px.line(
+        new_df, 
+        x='datum', 
+        y='procenta', 
+        title='Vývoj inflace od roku 2000' if show_header else None, 
+        labels={
+            'datum': 'Rok a měsíc', 
+            'procenta': '%'
+        }
     )
 
-    st.plotly_chart(fig, config=config, use_container_width=True)
+    fig.update_layout(
+        px_optios
+    )
+
+    st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
 # show inflation in selected year
 def inflation_by_year():
@@ -135,27 +151,25 @@ def inflation_by_year():
 
     new_df = df.loc[df['rok'] == year]
 
-    fig = px.line(new_df, x='měsíc', y='procenta', labels=dict(měsíc='Měsíce', procenta='%'), markers=True)
-
-    config = dict({'scrollZoom': True})
-    fig.update_layout(
-        dragmode='pan',
-        plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(
-            showgrid=False,
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-        ),
+    fig = px.line(
+        new_df, 
+        x='měsíc', 
+        y='procenta', 
+        labels={
+            'měsíc': 'Měsíce', 
+            'procenta': '%'
+        },
+        markers=True
     )
 
-    st.plotly_chart(fig, config=config, use_container_width=True)
+    fig.update_layout(
+        px_optios
+    )
+
+    st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
 # continuity between inflation and median salary
 def inflation_median_salary():
-    fig = px.bar(rocni_df, x='rok', y='procenta')
-
     trace1 = go.Bar(
         x=rocni_df['rok'],
         y=rocni_df['procenta'],
@@ -166,6 +180,7 @@ def inflation_median_salary():
         x=prumerna_mzda_df['rok'],
         y=prumerna_mzda_df['částka'],
         name='průměrná mzda (Kč)',
+        line={'width': 5},
         yaxis='y2'
     )
 
@@ -173,13 +188,8 @@ def inflation_median_salary():
     fig.add_trace(trace1)
     fig.add_trace(trace2, secondary_y=True)
 
-    config = dict({'scrollZoom': True})
     fig.update_layout(
-        dragmode='pan',
-        plot_bgcolor='rgba(0,0,0,0)',
-        yaxis=dict(
-            zeroline=False,
-        ),
+        px_optios
     )
     fig.for_each_xaxis(lambda x: x.update(showgrid=False))
     fig.for_each_yaxis(lambda x: x.update(showgrid=False))
@@ -187,7 +197,7 @@ def inflation_median_salary():
     fig['layout']['yaxis']['title']='%'
     fig['layout']['yaxis2']['title']='Kč'
 
-    st.plotly_chart(fig, config=config, use_container_width=True)
+    st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
 # sidebar menu functionality
 match options:
