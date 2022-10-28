@@ -52,7 +52,8 @@ with st.sidebar:
 # load data
 df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/mesicni-inflace.csv')
 rocni_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/rocni-inflace.csv')
-prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/prumerna-mzda-cr-dataset/master/prumerna-mzda.csv')
+prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy-cr-dataset/master/prumerna-mzda.csv')
+minimalni_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy-cr-dataset/master/minimalni-mzda.csv')
 
 # home page
 def home():
@@ -190,10 +191,19 @@ def inflation_median_salary():
         line={'width': 5},
         yaxis='y2'
     )
+    
+    trace3 = go.Line(
+        x=minimalni_mzda_df['rok'],
+        y=minimalni_mzda_df['částka'],
+        name='Minimální mzda (Kč)',
+        line={'width': 5, 'color': '#cf51c0'},
+        yaxis='y2',
+    )
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(trace1)
-    fig.add_trace(trace2, secondary_y=True)
+    fig.add_trace(trace2)
+    fig.add_trace(trace3)
 
     fig.update_layout(
         px_optios
