@@ -40,8 +40,6 @@ prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/prum
 
 # home page
 def home():
-    st.title('Inflace v ČR')
-
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown('''
@@ -64,8 +62,6 @@ def home():
     
 # table where you can filter data by year and month
 def table_filtered():
-    st.subheader('Tabulka inflace')
-
     # append new row to use all data in column
     new_df = pd.DataFrame([['vše', 'vše', '']], columns=df.columns).append(df)
 
@@ -110,10 +106,10 @@ def table():
     st.dataframe(df)
 
 # show inflation % of each month since 2000 till now
-def inflation_alltime():
+def inflation_alltime(show_header=True):
     df['datum'] = df['rok'].astype(str) + '.' + df['měsíc']
 
-    fig = px.line(df, x='datum', y='procenta', title='Vývoj inflace od roku 2000', labels=dict(datum='Rok a měsíc', procenta='%'))
+    fig = px.line(df, x='datum', y='procenta', title='Vývoj inflace od roku 2000' if show_header else None, labels=dict(datum='Rok a měsíc', procenta='%'))
 
     config = dict({'scrollZoom': True})
     fig.update_layout(
@@ -132,8 +128,6 @@ def inflation_alltime():
 
 # show inflation in selected year
 def inflation_by_year():
-    st.subheader('Vývoj inflace pro zvolený rok')
-
     year = st.select_slider('Vyber rok:', df['rok'].unique(), df['rok'].max(axis=0))
 
     new_df = df.loc[df['rok'] == year]
@@ -157,8 +151,6 @@ def inflation_by_year():
 
 # continuity between inflation and median salary
 def inflation_median_salary():
-    st.subheader('Spojitost mezi inflací a minimální mzdou')
-
     fig = px.bar(rocni_df, x='rok', y='procenta')
 
     trace1 = go.Bar(
@@ -196,14 +188,19 @@ def inflation_median_salary():
 
 # sidebar menu functionality
 if options == 'Hlavní stránka':
+    st.title('Inflace v ČR')
     home()
 elif options == 'Tabulka dat':
+    st.title('Tabulka inflace')
     table_filtered()
-elif options == 'Roční vývoj inflace':
-    inflation_by_year()
 elif options == 'Vývoj inflace od roku 2000':
-    inflation_alltime()
+    st.title('Vývoj inflace od roku 2000')
+    inflation_alltime(show_header=False)
+elif options == 'Roční vývoj inflace':
+    st.title('Vývoj inflace pro zvolený rok')
+    inflation_by_year()
 elif options == 'Inflace/Průměrná mzda':
+    st.title('Spojitost mezi inflací a minimální mzdou')
     inflation_median_salary()
 
 # custom styles
