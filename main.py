@@ -33,7 +33,7 @@ with st.sidebar:
             'Tabulka dat', 
             'Vývoj inflace od roku 2000',
             'Roční vývoj inflace', 
-            'Inflace/Průměrná mzda'
+            'Inflace/Mzdy'
         ],
         icons=[
             'house',
@@ -177,7 +177,7 @@ def inflation_by_year():
     st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
 # continuity between inflation and median salary
-def inflation_median_salary():
+def inflation_salary():
     trace1 = go.Bar(
         x=rocni_df['rok'],
         y=rocni_df['procenta'],
@@ -195,7 +195,7 @@ def inflation_median_salary():
     trace3 = go.Line(
         x=minimalni_mzda_df['rok'],
         y=minimalni_mzda_df['částka'],
-        name='Minimální mzda (Kč)',
+        name='minimální mzda (Kč)',
         line={'width': 5, 'color': '#cf51c0'},
         yaxis='y2',
     )
@@ -230,9 +230,9 @@ match options:
     case 'Roční vývoj inflace':
         st.title('Vývoj inflace pro zvolený rok')
         inflation_by_year()
-    case 'Inflace/Průměrná mzda':
-        st.title('Spojitost mezi inflací a minimální mzdou')
-        inflation_median_salary()
+    case 'Inflace/Mzdy':
+        st.title('Spojitost mezi inflací a mzdami')
+        inflation_salary()
 
 # custom styles
 with open('./styles/style.css') as f:
