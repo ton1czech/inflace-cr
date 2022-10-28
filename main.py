@@ -47,7 +47,6 @@ def home():
             #### Dále jsem se chtěl naučit používat technologie sloužící právě k datové vizualizaci.  
             #### Pro zobrazení dalších vizualizací zvolte jednu z možností v postranní nabídce.
         ''', unsafe_allow_html=True)
-
     with col2:
         st.markdown('''
             Všechna data jsou získána z ČSÚ  
@@ -57,15 +56,20 @@ def home():
             _www.github.com/ton1czech/inflace-cr-dataset_  
             _www.github.com/ton1czech/prumerna-mzda-cr-dataset_
         ''', unsafe_allow_html=True)
+
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        inflation_alltime()
+    with col2:
+        table()
     
-    inflation_alltime()
     
 # table where you can filter data by year and month
 def table_filtered():
     # append new row to use all data in column
     new_df = pd.DataFrame([['vše', 'vše', '']], columns=df.columns).append(df)
 
-    # split layout to two columns
+    # split layout into two columns
     col1, col2 = st.columns(2)
     with col1:
         year = st.selectbox('Filtrovat rok:', new_df['rok'].unique())
@@ -101,8 +105,6 @@ def table_filtered():
 
 # simple table of inflation data
 def table():
-    st.subheader('Tabulka inflace')
-
     st.dataframe(df)
 
 # show inflation % of each month since 2000 till now
