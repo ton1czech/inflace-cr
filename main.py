@@ -209,7 +209,7 @@ def inflation_median_salary():
 # sidebar menu functionality
 match options:
     case 'Hlavní stránka':
-        st.title('Inflace v ČR')
+        st.title('Inflace v ČR 😱')
         home()
     case 'Tabulka dat':
         st.title('Tabulka inflace')
