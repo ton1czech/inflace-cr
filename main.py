@@ -187,21 +187,22 @@ def inflation_median_salary():
     st.plotly_chart(fig, config=config, use_container_width=True)
 
 # sidebar menu functionality
-if options == 'Hlavní stránka':
-    st.title('Inflace v ČR')
-    home()
-elif options == 'Tabulka dat':
-    st.title('Tabulka inflace')
-    table_filtered()
-elif options == 'Vývoj inflace od roku 2000':
-    st.title('Vývoj inflace od roku 2000')
-    inflation_alltime(show_header=False)
-elif options == 'Roční vývoj inflace':
-    st.title('Vývoj inflace pro zvolený rok')
-    inflation_by_year()
-elif options == 'Inflace/Průměrná mzda':
-    st.title('Spojitost mezi inflací a minimální mzdou')
-    inflation_median_salary()
+match options:
+    case 'Hlavní stránka':
+        st.title('Inflace v ČR')
+        home()
+    case 'Tabulka dat':
+        st.title('Tabulka inflace')
+        table_filtered()
+    case 'Vývoj inflace od roku 2000':
+        st.title('Vývoj inflace od roku 2000')
+        inflation_alltime(show_header=False)
+    case 'Roční vývoj inflace':
+        st.title('Vývoj inflace pro zvolený rok')
+        inflation_by_year()
+    case 'Inflace/Průměrná mzda':
+        st.title('Spojitost mezi inflací a minimální mzdou')
+        inflation_median_salary()
 
 # custom styles
 styles = """
