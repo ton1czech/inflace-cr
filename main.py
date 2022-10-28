@@ -59,8 +59,8 @@ def home():
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown('''
-            #### Projekt jsem vytvořil za účelem zjištění informací o inflaci v České republice, jelikož v poslední době stoupá velice rychlým tempem.  
-            #### Dále jsem se chtěl naučit používat technologie sloužící právě k datové vizualizaci.  
+            ##### Projekt jsem vytvořil za účelem zjištění informací o inflaci v České republice, jelikož v poslední době stoupá velice rychlým tempem.  
+            ##### Dále jsem se chtěl naučit používat technologie sloužící právě k datové vizualizaci.  
             #### Pro zobrazení dalších vizualizací zvolte jednu z možností v postranní nabídce.
         ''', unsafe_allow_html=True)
     with col2:
@@ -78,6 +78,13 @@ def home():
         inflation_alltime()
     with col2:
         table()
+    
+    st.markdown('''
+        <br><br><br><br><br><br>
+
+        ##### Nezapomeňte navštívit můj github profil a prohlédnout si další projekty, na kterých jsem již pracoval.
+        _www.github.com/ton1czech_
+    ''', unsafe_allow_html=True)
     
     
 # table where you can filter data by year and month
