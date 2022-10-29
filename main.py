@@ -66,12 +66,11 @@ def home():
         ''', unsafe_allow_html=True)
     with col2:
         st.markdown('''
-            Všechna data jsou získána z ČSÚ  
-            _(www.czso.cz/csu/czso/mira_inflace)_.  
+            Všechna data jsou získána z [_ČSÚ_.](https://czso.cz/csu/czso/mira_inflace)  
             <br>
             Zde najdete mnou vytvořené **.csv** datasety:  
-            _www.github.com/ton1czech/inflace-cr-dataset_  
-            _www.github.com/ton1czech/prumerna-mzda-cr-dataset_
+            [_Inflace v ČR_](https://github.com/ton1czech/inflace-cr-dataset)  
+            [_Mzdy v ČR_](https://github.com/ton1czech/prumerna-mzda-cr-dataset)
         ''', unsafe_allow_html=True)
 
     col1, col2 = st.columns([2, 1])
@@ -83,8 +82,7 @@ def home():
     st.markdown('''
         <br><br><br><br><br><br>
 
-        ##### Nezapomeňte navštívit můj github profil a prohlédnout si další projekty, na kterých jsem již pracoval.
-        _www.github.com/ton1czech_
+        ##### Nezapomeňte navštívit můj github profil ([*@ton1czech*](https://github.com/ton1czech)) a prohlédnout si další projekty, na kterých jsem již pracoval.
     ''', unsafe_allow_html=True)
     
     
