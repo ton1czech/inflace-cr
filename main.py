@@ -194,16 +194,18 @@ def inflation_salary():
         x=prumerna_mzda_df['rok'],
         y=prumerna_mzda_df['částka'],
         name='průměrná mzda (Kč)',
-        line={'width': 3},
-        yaxis='y2'
+        line={'width': 2},
+        yaxis='y2',
+        mode='lines+markers'
     )
     
     trace3 = go.Line(
         x=minimalni_mzda_df['rok'],
         y=minimalni_mzda_df['částka'],
         name='minimální mzda (Kč)',
-        line={'width': 3, 'color': '#cf51c0'},
+        line={'width': 2,},
         yaxis='y2',
+        mode='lines+markers'
     )
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -215,7 +217,7 @@ def inflation_salary():
         px_optios
     )
     fig.for_each_xaxis(lambda x: x.update(showgrid=False))
-    fig.for_each_yaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False, zeroline=False))
     fig['layout']['xaxis']['title']='Rok'
     fig['layout']['yaxis']['title']='%'
     fig['layout']['yaxis2']['title']='Kč'
@@ -236,7 +238,8 @@ def inflation_debt():
         y=statni_dluh_df['částka'],
         name='státní dluh (Kč)',
         line={'width': 2},
-        yaxis='y2'
+        yaxis='y2',
+        mode='lines+markers'
     )
     
     fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -247,7 +250,7 @@ def inflation_debt():
         px_optios
     )
     fig.for_each_xaxis(lambda x: x.update(showgrid=False))
-    fig.for_each_yaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False, zeroline=False))
     fig['layout']['xaxis']['title']='Rok'
     fig['layout']['yaxis']['title']='%'
     fig['layout']['yaxis2']['title']='Kč'
@@ -273,7 +276,8 @@ def inflation_products_price():
         y=spotrebitelske_ceny_df[pivo_df]['cena'],
         name='světlé pivo lahvové (0.5L) (Kč)',
         line={'width': 2},
-        yaxis='y2'
+        yaxis='y2',
+        mode='lines+markers'
     )
 
     trace3 = go.Scatter(
@@ -281,7 +285,8 @@ def inflation_products_price():
         y=spotrebitelske_ceny_df[marlboro_df]['cena'],
         name='marlboro (1 krabička)',
         line={'width': 2},
-        yaxis='y2'
+        yaxis='y2',
+        mode='lines+markers'
     )
 
     trace4 = go.Scatter(
@@ -289,7 +294,8 @@ def inflation_products_price():
         y=spotrebitelske_ceny_df[benzin_df]['cena'],
         name='benzin natural 95 (1L)',
         line={'width': 2},
-        yaxis='y2'
+        yaxis='y2',
+        mode='lines+markers'
     )
 
     trace5 = go.Scatter(
@@ -297,7 +303,8 @@ def inflation_products_price():
         y=spotrebitelske_ceny_df[nafta_df]['cena'],
         name='nafta (1L)',
         line={'width': 2},
-        yaxis='y2'
+        yaxis='y2',
+        mode='lines+markers'
     )
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -311,7 +318,7 @@ def inflation_products_price():
         px_optios
     )
     fig.for_each_xaxis(lambda x: x.update(showgrid=False))
-    fig.for_each_yaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False, zeroline=False))
     fig['layout']['xaxis']['title']='Rok'
     fig['layout']['yaxis']['title']='%'
     fig['layout']['yaxis2']['title']='Kč'
