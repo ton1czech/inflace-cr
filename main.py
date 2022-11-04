@@ -43,6 +43,7 @@ with st.sidebar:
             'graph-up',
             'graph-up',
             'arrow-down-up',
+            'arrow-down-up',
             'arrow-down-up'
         ],
         styles={
