@@ -257,6 +257,7 @@ def inflation_debt():
 def inflation_products_price():
     pivo_df = spotrebitelske_ceny_df['produkt'].isin(['světlé pivo lahvové (0.5L)'])
     marlboro_df = spotrebitelske_ceny_df['produkt'].isin(['marlboro (1 krabička)'])
+    benzin_df = spotrebitelske_ceny_df['produkt'].isin(['benzin natural 95 (1L)'])
 
     trace1 = go.Scatter(
         x=rocni_df['rok'],
@@ -281,10 +282,19 @@ def inflation_products_price():
         yaxis='y2'
     )
 
+    trace4 = go.Scatter(
+        x=spotrebitelske_ceny_df[benzin_df]['rok'],
+        y=spotrebitelske_ceny_df[benzin_df]['cena'],
+        name='benzin natural 95 (1L)',
+        line={'width': 2},
+        yaxis='y2'
+    )
+
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(trace1)
     fig.add_trace(trace2)
     fig.add_trace(trace3)
+    fig.add_trace(trace4)
 
     fig.update_layout(
         px_optios
