@@ -190,7 +190,7 @@ def inflation_salary():
         name='míra inflace (%)',
     )
 
-    trace2 = go.Line(
+    trace2 = go.Scatter(
         x=prumerna_mzda_df['rok'],
         y=prumerna_mzda_df['částka'],
         name='průměrná mzda (Kč)',
@@ -199,7 +199,7 @@ def inflation_salary():
         mode='lines+markers'
     )
     
-    trace3 = go.Line(
+    trace3 = go.Scatter(
         x=minimalni_mzda_df['rok'],
         y=minimalni_mzda_df['částka'],
         name='minimální mzda (Kč)',
