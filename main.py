@@ -33,13 +33,15 @@ with st.sidebar:
             'Tabulka dat', 
             'Vývoj inflace od roku 2000',
             'Roční vývoj inflace', 
-            'Inflace/Mzdy'
+            'Inflace/Mzdy',
+            'Inflace/Státní dluh'
         ],
         icons=[
             'house',
             'file-spreadsheet',
             'graph-up',
             'graph-up',
+            'arrow-down-up',
             'arrow-down-up'
         ],
         styles={
@@ -54,6 +56,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset
 rocni_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/inflace-cr-dataset/master/rocni-inflace.csv')
 prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy-cr-dataset/master/prumerna-mzda.csv')
 minimalni_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy-cr-dataset/master/minimalni-mzda.csv')
+statni_dluh_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/statni-dluh-cr-dataset/master/statni-dluh.csv')
 
 # home page
 def home():
@@ -70,7 +73,8 @@ def home():
             <br>
             Zde najdete mnou vytvořené **.csv** datasety:  
             [_Inflace v ČR_](https://github.com/ton1czech/inflace-cr-dataset)  
-            [_Mzdy v ČR_](https://github.com/ton1czech/prumerna-mzda-cr-dataset)
+            [_Mzdy v ČR_](https://github.com/ton1czech/prumerna-mzda-cr-dataset)  
+            [_Státní dluh v ČR_](https://github.com/ton1czech/statni-dluh-cr-dataset)
         ''', unsafe_allow_html=True)
 
     col1, col2 = st.columns([2, 1])
@@ -174,7 +178,7 @@ def inflation_by_year():
 
     st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
-# continuity between inflation and median salary
+# continuity between inflation and minimal, median salary
 def inflation_salary():
     trace1 = go.Scatter(
         x=rocni_df['rok'],
@@ -187,7 +191,7 @@ def inflation_salary():
         x=prumerna_mzda_df['rok'],
         y=prumerna_mzda_df['částka'],
         name='průměrná mzda (Kč)',
-        line={'width': 5},
+        line={'width': 3},
         yaxis='y2'
     )
     
@@ -195,7 +199,7 @@ def inflation_salary():
         x=minimalni_mzda_df['rok'],
         y=minimalni_mzda_df['částka'],
         name='minimální mzda (Kč)',
-        line={'width': 5, 'color': '#cf51c0'},
+        line={'width': 3, 'color': '#cf51c0'},
         yaxis='y2',
     )
 
@@ -203,6 +207,38 @@ def inflation_salary():
     fig.add_trace(trace1)
     fig.add_trace(trace2)
     fig.add_trace(trace3)
+
+    fig.update_layout(
+        px_optios
+    )
+    fig.for_each_xaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False))
+    fig['layout']['xaxis']['title']='Rok'
+    fig['layout']['yaxis']['title']='%'
+    fig['layout']['yaxis2']['title']='Kč'
+
+    st.plotly_chart(fig, config=px_cfg, use_container_width=True)
+
+# continuity between inflation and national debt
+def inflation_debt():
+    trace1 = go.Scatter(
+        x=rocni_df['rok'],
+        y=rocni_df['procenta'],
+        fill='tozeroy',
+        name='míra inflace (%)',
+    )
+
+    trace2 = go.Scatter(
+        x=statni_dluh_df['rok'],
+        y=statni_dluh_df['částka'],
+        name='státní dluh (Kč)',
+        line={'width': 2},
+        yaxis='y2'
+    )
+    
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(trace1)
+    fig.add_trace(trace2)
 
     fig.update_layout(
         px_optios
@@ -232,6 +268,9 @@ match options:
     case 'Inflace/Mzdy':
         st.title('Spojitost mezi inflací a mzdami')
         inflation_salary()
+    case 'Inflace/Státní dluh':
+        st.title('Spojistost mezi inflací a státním dluhem')
+        inflation_debt()
 
 # custom styles
 with open('./styles/style.css') as f:
