@@ -176,9 +176,10 @@ def inflation_by_year():
 
 # continuity between inflation and median salary
 def inflation_salary():
-    trace1 = go.Bar(
+    trace1 = go.Scatter(
         x=rocni_df['rok'],
         y=rocni_df['procenta'],
+        fill='tozeroy',
         name='míra inflace (%)',
     )
 
