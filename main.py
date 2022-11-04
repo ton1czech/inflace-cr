@@ -256,6 +256,7 @@ def inflation_debt():
 # continuity between inflation and price of products
 def inflation_products_price():
     pivo_df = spotrebitelske_ceny_df['produkt'].isin(['světlé pivo lahvové (0.5L)'])
+    marlboro_df = spotrebitelske_ceny_df['produkt'].isin(['marlboro (1 krabička)'])
 
     trace1 = go.Scatter(
         x=rocni_df['rok'],
@@ -272,9 +273,18 @@ def inflation_products_price():
         yaxis='y2'
     )
 
+    trace3 = go.Scatter(
+        x=spotrebitelske_ceny_df[marlboro_df]['rok'],
+        y=spotrebitelske_ceny_df[marlboro_df]['cena'],
+        name='marlboro (1 krabička)',
+        line={'width': 2},
+        yaxis='y2'
+    )
+
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(trace1)
     fig.add_trace(trace2)
+    fig.add_trace(trace3)
 
     fig.update_layout(
         px_optios
