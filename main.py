@@ -72,12 +72,13 @@ def home():
         ''', unsafe_allow_html=True)
     with col2:
         st.markdown('''
-            Všechna data jsou získána z [_ČSÚ_.](https://czso.cz/csu/czso/mira_inflace)  
+            Všechna data jsou získána z [_ČSÚ_.](https://czso.cz/csu/czso)  
             <br>
             Zde najdete mnou vytvořené **.csv** datasety:  
             [_Inflace v ČR_](https://github.com/ton1czech/inflace-cr-dataset)  
             [_Mzdy v ČR_](https://github.com/ton1czech/prumerna-mzda-cr-dataset)  
-            [_Státní dluh v ČR_](https://github.com/ton1czech/statni-dluh-cr-dataset)
+            [_Státní dluh v ČR_](https://github.com/ton1czech/statni-dluh-cr-dataset)  
+            [_Spotřebitelské ceny v ČR_](https://github.com/ton1czech/spotrebitelske-ceny-cr-dataset)
         ''', unsafe_allow_html=True)
 
     col1, col2 = st.columns([2, 1])
