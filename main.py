@@ -264,6 +264,7 @@ def inflation_products_price():
     benzin_df = spotrebitelske_ceny_df['produkt'].isin(['benzin natural 95 (1 L)'])
     nafta_df = spotrebitelske_ceny_df['produkt'].isin(['nafta (1 L)'])
     brambory_df = spotrebitelske_ceny_df['produkt'].isin(['brambory (1 KG)'])
+    maslo_df = spotrebitelske_ceny_df['produkt'].isin(['máslo (1 KG)'])
 
     trace1 = go.Scatter(
         x=rocni_df['rok'],
@@ -316,6 +317,14 @@ def inflation_products_price():
         yaxis='y2',
         mode='lines+markers'
     )
+    trace7 = go.Scatter(
+        x=spotrebitelske_ceny_df[maslo_df]['rok'],
+        y=spotrebitelske_ceny_df[maslo_df]['cena'],
+        name='máslo (1 KG)',
+        line={'width': 2},
+        yaxis='y2',
+        mode='lines+markers'
+    )
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(trace1)
@@ -324,6 +333,7 @@ def inflation_products_price():
     fig.add_trace(trace4)
     fig.add_trace(trace5)
     fig.add_trace(trace6)
+    fig.add_trace(trace7)
 
     fig.update_layout(
         px_optios
