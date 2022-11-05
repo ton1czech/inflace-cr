@@ -283,7 +283,7 @@ def inflation_products_price():
     trace3 = go.Scatter(
         x=spotrebitelske_ceny_df[marlboro_df]['rok'],
         y=spotrebitelske_ceny_df[marlboro_df]['cena'],
-        name='marlboro (1 krabička)',
+        name='marlboro (1 krabička) (Kč)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
@@ -292,7 +292,7 @@ def inflation_products_price():
     trace4 = go.Scatter(
         x=spotrebitelske_ceny_df[benzin_df]['rok'],
         y=spotrebitelske_ceny_df[benzin_df]['cena'],
-        name='benzin natural 95 (1L)',
+        name='benzin natural 95 (1L) (Kč)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
@@ -301,7 +301,7 @@ def inflation_products_price():
     trace5 = go.Scatter(
         x=spotrebitelske_ceny_df[nafta_df]['rok'],
         y=spotrebitelske_ceny_df[nafta_df]['cena'],
-        name='nafta (1L)',
+        name='nafta (1L) (Kč)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
