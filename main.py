@@ -259,10 +259,11 @@ def inflation_debt():
 
 # continuity between inflation and price of products
 def inflation_products_price():
-    pivo_df = spotrebitelske_ceny_df['produkt'].isin(['světlé pivo lahvové (0.5L)'])
+    pivo_df = spotrebitelske_ceny_df['produkt'].isin(['světlé pivo lahvové (0.5 L)'])
     marlboro_df = spotrebitelske_ceny_df['produkt'].isin(['marlboro (1 krabička)'])
-    benzin_df = spotrebitelske_ceny_df['produkt'].isin(['benzin natural 95 (1L)'])
-    nafta_df = spotrebitelske_ceny_df['produkt'].isin(['nafta (1L)'])
+    benzin_df = spotrebitelske_ceny_df['produkt'].isin(['benzin natural 95 (1 L)'])
+    nafta_df = spotrebitelske_ceny_df['produkt'].isin(['nafta (1 L)'])
+    brambory_df = spotrebitelske_ceny_df['produkt'].isin(['brambory (1 KG)'])
 
     trace1 = go.Scatter(
         x=rocni_df['rok'],
@@ -274,7 +275,7 @@ def inflation_products_price():
     trace2 = go.Scatter(
         x=spotrebitelske_ceny_df[pivo_df]['rok'],
         y=spotrebitelske_ceny_df[pivo_df]['cena'],
-        name='světlé pivo lahvové (0.5L) (Kč)',
+        name='světlé pivo lahvové (0.5 L) (Kč)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
@@ -292,7 +293,7 @@ def inflation_products_price():
     trace4 = go.Scatter(
         x=spotrebitelske_ceny_df[benzin_df]['rok'],
         y=spotrebitelske_ceny_df[benzin_df]['cena'],
-        name='benzin natural 95 (1L) (Kč)',
+        name='benzin natural 95 (1 L) (Kč)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
@@ -301,7 +302,16 @@ def inflation_products_price():
     trace5 = go.Scatter(
         x=spotrebitelske_ceny_df[nafta_df]['rok'],
         y=spotrebitelske_ceny_df[nafta_df]['cena'],
-        name='nafta (1L) (Kč)',
+        name='nafta (1 L) (Kč)',
+        line={'width': 2},
+        yaxis='y2',
+        mode='lines+markers'
+    )
+
+    trace6 = go.Scatter(
+        x=spotrebitelske_ceny_df[brambory_df]['rok'],
+        y=spotrebitelske_ceny_df[brambory_df]['cena'],
+        name='brambory (1 KG)',
         line={'width': 2},
         yaxis='y2',
         mode='lines+markers'
@@ -313,6 +323,7 @@ def inflation_products_price():
     fig.add_trace(trace3)
     fig.add_trace(trace4)
     fig.add_trace(trace5)
+    fig.add_trace(trace6)
 
     fig.update_layout(
         px_optios
