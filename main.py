@@ -35,13 +35,15 @@ with st.sidebar:
             'Roční vývoj inflace', 
             'Inflace/Mzdy',
             'Inflace/Státní dluh',
-            'Inflace/Spotřebitelské ceny'
+            'Inflace/Spotřebitelské ceny',
+            'Inflace/HDP'
         ],
         icons=[
             'house',
             'file-spreadsheet',
             'graph-up',
             'graph-up',
+            'arrow-down-up',
             'arrow-down-up',
             'arrow-down-up',
             'arrow-down-up'
@@ -60,6 +62,7 @@ prumerna_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy
 minimalni_mzda_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/mzdy-cr-dataset/master/minimalni-mzda.csv')
 statni_dluh_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/statni-dluh-cr-dataset/master/statni-dluh.csv')
 spotrebitelske_ceny_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/spotrebitelske-ceny-cr-dataset/master/spotrebitelske-ceny.csv')
+hdp_df = pd.read_csv('https://raw.githubusercontent.com/ton1czech/hdp-cr-dataset/master/hdp.csv')
 
 # home page
 def home():
@@ -347,6 +350,39 @@ def inflation_products_price():
 
     st.plotly_chart(fig, config=px_cfg, use_container_width=True)
 
+# continuity between inflation and price of products
+def inflation_hdp():
+    trace1 = go.Scatter(
+        x=rocni_df['rok'],
+        y=rocni_df['procenta'],
+        fill='tozeroy',
+        name='míra inflace (%)',
+    )
+
+    trace2 = go.Scatter(
+        x=hdp_df['rok'],
+        y=hdp_df['castka'],
+        name='HDP (Kč)',
+        line={'width': 2},
+        yaxis='y2',
+        mode='lines+markers'
+    )
+    
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(trace1)
+    fig.add_trace(trace2)
+
+    fig.update_layout(
+        px_optios
+    )
+    fig.for_each_xaxis(lambda x: x.update(showgrid=False))
+    fig.for_each_yaxis(lambda x: x.update(showgrid=False, zeroline=False))
+    fig['layout']['xaxis']['title']='Rok'
+    fig['layout']['yaxis']['title']='%'
+    fig['layout']['yaxis2']['title']='Kč'
+
+    st.plotly_chart(fig, config=px_cfg, use_container_width=True)
+
 # sidebar menu functionality
 match options:
     case 'Hlavní stránka':
@@ -370,6 +406,9 @@ match options:
     case 'Inflace/Spotřebitelské ceny':
         st.title('Spojitost mezi inflací a spotřebitelskými cenami')
         inflation_products_price()
+    case 'Inflace/HDP':
+        st.title('Spojitost mezi inflací a HDP')
+        inflation_hdp()
 
 # custom styles
 with open('./styles/style.css') as f:
