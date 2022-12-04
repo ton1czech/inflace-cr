@@ -65,7 +65,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [<img alt="Reddit" src="https://img.shields.io/badge/@ton1czech-FF4500?style=for-the-badge&logo=reddit&logoColor=white" />](https://reddit.com/user/)
 [<img alt="TikTok" src="https://img.shields.io/badge/@t0n1czech-%23000000.svg?style=for-the-badge&logo=TikTok&logoColor=white" />](https://www.tiktok.com/@ton1czech)
-[<img alt="Gitlab" src="https://img.shields.io/badge/@ton1czech-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white" />](https://gitlab/ton1czech)
+[<img alt="Gitlab" src="https://img.shields.io/badge/@ton1czech-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white" />](https://gitlab.com/ton1czech)
 [<img alt="Dribbble" src="https://img.shields.io/badge/@ton1czech-EA4C89?style=for-the-badge&logo=dribbble&logoColor=white" />](https://dribbble.com/ton1czech)
 
 [<img alt="Stack Overflow" src="https://img.shields.io/badge/@ton1czech-FE7A16?style=for-the-badge&logo=stack-overflow&logoColor=white" />](https://stackoverflow.com/users/15073347/ton1czech)
