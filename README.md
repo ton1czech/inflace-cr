@@ -58,7 +58,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## 📌 **LINKS**
 
-[<img alt="Gmail" src="https://img.shields.io/badge/@ton1czech-D14836?style=for-the-badge&logo=gmail&logoColor=white" />]()
+[<img alt="Github" src="https://img.shields.io/badge/@ton1czech-%23181717.svg?style=for-the-badge&logo=github&logoColor=white" />](https://github.com/ton1czech)
 [<img alt="Twitter" src="https://img.shields.io/badge/@ton1czech-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white" />](https://twitter.com/ton1czech)
 [<img alt="Instagram" src="https://img.shields.io/badge/@ton1czech-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white" />](https://instagram.com/ton1czech)
 [<img alt="Youtube" src="https://img.shields.io/badge/@ton1czech-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white" />](https://www.youtube.com/channel/UCblA_CnykG2Dw_6IMwZ9z9A)
